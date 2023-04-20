@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -47,14 +49,22 @@ public class MainActivity extends AppCompatActivity {
         listapersonas.add(new Personas("Lizeth Astrada", "CEO","concesionario Motoblox"));
 
 
-        AdaptadorPersonas adaptador = new AdaptadorPersonas(this);
+        AdaptadorPersonas adaptador = new AdaptadorPersonas(this,android.R.layout.simple_list_item_1,lv1);
         lv1 = findViewById(R.id.lsvPersonas);
         lv1.setAdapter(adaptador);
+
+        lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(parent.getContext(),"Selecciono "+parent.getItemAtPosition(position).toString(),Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
     class AdaptadorPersonas extends ArrayAdapter<Personas> {
         AppCompatActivity appCompatActivity;
 
-        AdaptadorPersonas(AppCompatActivity context) {
+        AdaptadorPersonas(AppCompatActivity context, int simple_list_item_1, ListView lv1) {
             super(context, R.layout.persona, listapersonas);
             appCompatActivity = context;
         }
@@ -76,7 +86,9 @@ public class MainActivity extends AppCompatActivity {
 
 
             return(item);
+
         }
+
 
 
 
